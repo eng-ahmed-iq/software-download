@@ -73,6 +73,10 @@
             font-weight: bold;
             margin-top: 15px;
         }
+        /* إخفاء الإطار البرمجي تماماً عن عين الزبون */
+        #hidden_iframe {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -81,21 +85,25 @@
     <h2>تحميل البرنامج مجاناً</h2>
     <p class="subtitle">يرجى ملء البيانات التالية للبدء في تحميل البرنامج فوراً</p>
     
-    <form id="downloadForm">
+    <!-- تم ربط النموذج بالإطار الخفي لمنع إعادة توجيه الصفحة للاستبيان -->
+    <form id="downloadForm" action="https://docs.google.com/forms/d/e/1FAIpQLSf2Ie5-8UQ8ik-kAKwhmgIt82orTprsX283qO3BSR5LWdKtoA/formResponse" method="POST" target="hidden_iframe">
         <div id="formFields">
             <div class="input-group">
                 <label for="name">الاسم الكامل</label>
-                <input type="text" id="name" required placeholder="أدخل اسمك الثلاثي">
+                <!-- اسم المدخل تم ضبطه ليتوافق مع حقل الاسم في جوجل فورم الخاص بك -->
+                <input type="text" id="name" name="entry.1739566517" required placeholder="أدخل اسمك الثلاثي">
             </div>
             
             <div class="input-group">
                 <label for="address">العنوان / المدينة</label>
-                <input type="text" id="address" required placeholder="مثال: بغداد، العراق">
+                <!-- اسم المدخل تم ضبطه ليتوافق مع حقل العنوان في جوجل فورم الخاص بك -->
+                <input type="text" id="address" name="entry.395969001" required placeholder="مثال: بغداد، العراق">
             </div>
             
             <div class="input-group">
                 <label for="phone">رقم الهاتف</label>
-                <input type="tel" id="phone" required placeholder="مثال: 07xxxxxxxxx">
+                <!-- اسم المدخل تم ضبطه ليتوافق مع حقل الهاتف في جوجل فورم الخاص بك -->
+                <input type="tel" id="phone" name="entry.676587083" required placeholder="مثال: 07xxxxxxxxx">
             </div>
         </div>
         
@@ -104,40 +112,25 @@
     </form>
 </div>
 
+<!-- الإطار الخفي الذي يتم إرسال البيانات من خلاله بصمت كامل لجوجل فورم -->
+<iframe name="hidden_iframe" id="hidden_iframe"></iframe>
+
 <script>
     const form = document.getElementById('downloadForm');
     const submitBtn = document.getElementById('submitBtn');
     const loadingText = document.getElementById('loadingText');
     const formFields = document.getElementById('formFields');
 
-    // رابط التحميل المباشر والآمن لبرنامجك من الـ Releases في GitHub الخاص بك
+    // رابط التحميل المباشر والآمن لبرنامجك من الـ Releases في GitHub الخاص بك (تم تعديله والتخلص من ميديا فاير)
     const fileDownloadUrl = "https://github.com/eng-ahmed-iq/software-download/releases/download/v1.0/SmartSchool_Setup.exe";
 
-    form.addEventListener('submit', function(event) {
-        event.preventDefault(); 
-
+    form.addEventListener('submit', function() {
+        // إخفاء حقول الإدخال والزر وعرض رسالة التحميل
         submitBtn.style.display = "none";
         loadingText.style.display = "block";
         formFields.style.display = "none";
 
-        const nameValue = document.getElementById('name').value;
-        const addressValue = document.getElementById('address').value;
-        const phoneValue = document.getElementById('phone').value;
-
-        // معطيات نموذج جوجل الخاص بك
-        const googleFormId = "1FAIpQLSf2Ie5-8UQ8ik-kAKwhmgIt82orTprsX283qO3BSR5LWdKtoA"; 
-        const entryName = "entry.1739566517";      
-        const entryAddress = "entry.395969001";   
-        const entryPhone = "entry.676587083";     
-
-        // بناء رابط إرسال البيانات المخفي إلى سيرفر جوجل فورم مباشرة
-        const googleSubmitUrl = `https://docs.google.com/forms/d/e/${googleFormId}/formResponse?submit=Submit&${entryName}=${encodeURIComponent(nameValue)}&${entryAddress}=${encodeURIComponent(addressValue)}&${entryPhone}=${encodeURIComponent(phoneValue)}`;
-
-        // إرسال البيانات في الخلفية بصمت تام دون مغادرة الصفحة
-        const dummyImg = new Image();
-        dummyImg.src = googleSubmitUrl;
-
-        // إطلاق عملية تحميل البرنامج للزبون بعد ثانية واحدة (لمنح المتصفح وقتاً لإرسال البيانات أولاً)
+        // إطلاق عملية تحميل البرنامج للزبون بعد ثانية واحدة (لمنح المتصفح وقتاً كافياً لإرسال البيانات عبر الإطار أولاً)
         setTimeout(() => {
             const hiddenAnchor = document.createElement('a');
             hiddenAnchor.href = fileDownloadUrl;
