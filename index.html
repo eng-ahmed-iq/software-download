@@ -51,7 +51,7 @@
             font-size: 15px;
             box-sizing: border-box;
         }
-        button, .download-btn {
+        button {
             display: block;
             width: 100%;
             padding: 12px;
@@ -63,15 +63,13 @@
             cursor: pointer;
             font-weight: bold;
             transition: background-color 0.3s;
-            text-decoration: none;
-            box-sizing: border-box;
         }
-        button:hover, .download-btn:hover {
+        button:hover {
             background-color: #218838;
         }
         .loading-text {
             display: none;
-            color: #007bff;
+            color: #28a745;
             font-weight: bold;
             margin-top: 15px;
         }
@@ -83,31 +81,26 @@
     <h2>تحميل البرنامج مجاناً</h2>
     <p class="subtitle">يرجى ملء البيانات التالية للبدء في تحميل البرنامج فوراً</p>
     
-    <form id="downloadForm" action="https://formspree.io/f/xqerkjwn" method="POST">
+    <form id="downloadForm">
         <div id="formFields">
             <div class="input-group">
                 <label for="name">الاسم الكامل</label>
-                <input type="text" id="name" name="الاسم" required placeholder="أدخل اسمك الثلاثي">
+                <input type="text" id="name" required placeholder="أدخل اسمك الثلاثي">
             </div>
             
             <div class="input-group">
                 <label for="address">العنوان / المدينة</label>
-                <input type="text" id="address" name="العنوان" required placeholder="مثال: الرياض، السعودية">
+                <input type="text" id="address" required placeholder="مثال: بغداد، العراق">
             </div>
             
             <div class="input-group">
                 <label for="phone">رقم الهاتف</label>
-                <input type="tel" id="phone" name="رقم الهاتف" required placeholder="مثال: 05xxxxxxx">
+                <input type="tel" id="phone" required placeholder="مثال: 07xxxxxxxxx">
             </div>
         </div>
         
-        <!-- زر الإرسال الأساسي -->
-        <button type="submit" id="submitBtn">تأكيد البيانات والانتقال للتحميل</button>
-        
-        <!-- زر التحميل الفعلي المحدث برابط ميديا فاير المباشر -->
-        <a id="realDownloadBtn" class="download-btn" style="display: none;" target="_blank" href="https://www.mediafire.com/file/n53eln33ud3yhvs/SmartSchool_Setup.exe/file">اضغط هنا لتحميل البرنامج الآن 📥</a>
-        
-        <div class="loading-text" id="loadingText">جاري إرسال البيانات، يرجى الانتظار...</div>
+        <button type="submit" id="submitBtn">إرسال البيانات والتحميل المباشر</button>
+        <div class="loading-text" id="loadingText">جاري بدء التحميل تلقائياً، يرجى الانتظار...</div>
     </form>
 </div>
 
@@ -115,48 +108,40 @@
     const form = document.getElementById('downloadForm');
     const submitBtn = document.getElementById('submitBtn');
     const loadingText = document.getElementById('loadingText');
-    const realDownloadBtn = document.getElementById('realDownloadBtn');
     const formFields = document.getElementById('formFields');
+
+    // رابط تحميل برنامجك المباشر من ميديا فاير
+    const fileDownloadUrl = "https://www.mediafire.com/file/n53eln33ud3yhvs/SmartSchool_Setup.exe/file";
 
     form.addEventListener('submit', function(event) {
         event.preventDefault(); 
 
-        // إخفاء زر الإرسال وإظهار جملة جاري الإرسال
         submitBtn.style.display = "none";
         loadingText.style.display = "block";
+        formFields.style.display = "none";
 
-        const formData = new FormData(form);
-        
-        fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                // عند نجاح الإرسال:
-                loadingText.innerText = "تم حفظ بياناتك بنجاح! اضغط على الزر الأخضر بالأسفل لبدء التحميل فوراً.";
-                loadingText.style.color = "#28a745";
-                
-                // إخفاء حقول الإدخال لتنظيف الشاشة للزبون
-                formFields.style.display = "none";
-                
-                // إظهار زر التحميل الفعلي والمباشر للعميل
-                realDownloadBtn.style.display = "block";
-                form.reset(); 
-            } else {
-                alert("حدث خطأ أثناء إرسال البيانات، يرجى المحاولة مرة أخرى.");
-                submitBtn.style.display = "block";
-                loadingText.style.display = "none";
-            }
-        })
-        .catch(error => {
-            alert("فشل الاتصال بالخادم. تأكد من اتصالك بالإنترنت.");
-            submitBtn.style.display = "block";
-            loadingText.style.display = "none";
-        });
+        const nameValue = document.getElementById('name').value;
+        const addressValue = document.getElementById('address').value;
+        const phoneValue = document.getElementById('phone').value;
+
+        // تم تعويض القيم بناءً على الرابط الذي أرسلته بدقة
+        const googleFormId = "1FAIpQLSf2Ie5-8UQ8ik-kAKwhmgIt82orTprsX283qO3BSR5LWdKtoA"; 
+        const entryName = "entry.1739566517";      
+        const entryAddress = "entry.395969001";   
+        const entryPhone = "entry.676587083";     
+
+        // بناء رابط الإرسال المخفي لجوجل فورم
+        const googleSubmitUrl = `https://docs.google.com/forms/d/e/${googleFormId}/formResponse?submit=Submit&${entryName}=${encodeURIComponent(nameValue)}&${entryAddress}=${encodeURIComponent(addressValue)}&${entryPhone}=${encodeURIComponent(phoneValue)}`;
+
+        // إرسال البيانات بشكل مخفي وسري تماماً في الخلفية 
+        const dummyImg = new Image();
+        dummyImg.src = googleSubmitUrl;
+
+        // إطلاق التحميل المباشر تلقائياً بعد أجزاء بسيطة من الثانية لمنح وقت للإرسال
+        setTimeout(() => {
+            window.location.href = fileDownloadUrl;
+            loadingText.innerText = "شكراً لك! بدأ تحميل البرنامج الآن على جهازك.";
+        }, 800);
     });
 </script>
 
