@@ -3,77 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحميل البرنامج</title>
+    <title>تحميل برنامج SmartSchool</title>
+    <!-- استدعاء خط Cairo الأنيق من جوجل وأيقونات FontAwesome لتصميم عصري -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
         }
+
+        /* دوائر زخرفية خلفية لإعطاء مظهر ثلاثي الأبعاد وعصري */
+        body::before, body::after {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            z-index: 0;
+            filter: blur(80px);
+            opacity: 0.4;
+        }
+        body::before {
+            background: #3b82f6;
+            top: -50px;
+            right: -50px;
+        }
+        body::after {
+            background: #10b981;
+            bottom: -50px;
+            left: -50px;
+        }
+
         .form-container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             text-align: center;
+            z-index: 1;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #ffffff;
         }
+
         h2 {
-            margin-bottom: 20px;
-            color: #333;
+            margin-bottom: 10px;
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 26px;
+            letter-spacing: -0.5px;
         }
+
         p.subtitle {
-            color: #666;
+            color: #94a3b8;
             font-size: 14px;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            font-weight: 600;
         }
+
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 22px;
             text-align: right;
+            position: relative;
         }
+
         label {
             display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
-            color: #555;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #cbd5e1;
+            font-weight: 700;
         }
+
+        /* حقول إدخال بتصميم زجاجي رائع */
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            right: 15px;
+            color: #64748b;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
         input[type="text"], input[type="tel"] {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 14px 45px 14px 15px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
             font-size: 15px;
-            box-sizing: border-box;
+            color: #ffffff;
+            outline: none;
+            transition: all 0.3s ease;
         }
+
+        input::placeholder {
+            color: #64748b;
+        }
+
+        /* تأثير التوهج عند الوقوف على الحقل */
+        input:focus {
+            border-color: #3b82f6;
+            background: rgba(15, 23, 42, 0.8);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
+        }
+
+        input:focus + i {
+            color: #3b82f6;
+        }
+
+        /* زر الإرسال الحديث والمتحرك */
         button {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             width: 100%;
-            padding: 12px;
-            background-color: #28a745;
+            padding: 15px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 14px;
             font-size: 16px;
             cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
         }
+
         button:hover {
-            background-color: #218838;
+            background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(16, 185, 129, 0.3);
         }
-        .loading-text {
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        /* شاشة التحميل والتأكيد الجذابة والحديثة */
+        .success-box {
             display: none;
-            color: #28a745;
-            font-weight: bold;
-            margin-top: 15px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+            animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
-        /* إخفاء الإطار البرمجي تماماً عن عين الزبون */
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #10b981;
+            font-size: 40px;
+            margin-bottom: 25px;
+            animation: pulseGlow 2s infinite;
+        }
+
+        .success-box h3 {
+            font-weight: 800;
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .success-box p {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* حركات الانيميشن للتصميم المفعم بالحيوية */
+        @keyframes scaleIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
         #hidden_iframe {
             display: none;
         }
@@ -81,56 +223,71 @@
 </head>
 <body>
 
-<div class="form-container">
-    <h2>تحميل البرنامج مجاناً</h2>
-    <p class="subtitle">يرجى ملء البيانات التالية للبدء في تحميل البرنامج فوراً</p>
-    
-    <!-- تم ربط النموذج بالإطار الخفي لمنع إعادة توجيه الصفحة للاستبيان -->
-    <form id="downloadForm" action="https://docs.google.com/forms/d/e/1FAIpQLSf2Ie5-8UQ8ik-kAKwhmgIt82orTprsX283qO3BSR5LWdKtoA/formResponse" method="POST" target="hidden_iframe">
-        <div id="formFields">
+<div class="form-container" id="containerCard">
+    <!-- الجزء الأول: حقول إدخال البيانات للعميل -->
+    <div id="formSection">
+        <h2>SmartSchool 🎒</h2>
+        <p class="subtitle">يرجى ملء البيانات التالية للبدء في تحميل البرنامج فوراً</p>
+        
+        <form id="downloadForm" action="https://docs.google.com/forms/d/e/1FAIpQLSf2Ie5-8UQ8ik-kAKwhmgIt82orTprsX283qO3BSR5LWdKtoA/formResponse" method="POST" target="hidden_iframe">
             <div class="input-group">
                 <label for="name">الاسم الكامل</label>
-                <!-- اسم المدخل تم ضبطه ليتوافق مع حقل الاسم في جوجل فورم الخاص بك -->
-                <input type="text" id="name" name="entry.1739566517" required placeholder="أدخل اسمك الثلاثي">
+                <div class="input-wrapper">
+                    <input type="text" id="name" name="entry.1739566517" required placeholder="أدخل اسمك الثلاثي">
+                    <i class="fa-solid fa-user"></i>
+                </div>
             </div>
             
             <div class="input-group">
                 <label for="address">العنوان / المدينة</label>
-                <!-- اسم المدخل تم ضبطه ليتوافق مع حقل العنوان في جوجل فورم الخاص بك -->
-                <input type="text" id="address" name="entry.395969001" required placeholder="مثال: بغداد، العراق">
+                <div class="input-wrapper">
+                    <input type="text" id="address" name="entry.395969001" required placeholder="مثال: بغداد، العراق">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
             </div>
             
             <div class="input-group">
                 <label for="phone">رقم الهاتف</label>
-                <!-- اسم المدخل تم ضبطه ليتوافق مع حقل الهاتف في جوجل فورم الخاص بك -->
-                <input type="tel" id="phone" name="entry.676587083" required placeholder="مثال: 07xxxxxxxxx">
+                <div class="input-wrapper">
+                    <input type="tel" id="phone" name="entry.676587083" required placeholder="مثال: 07xxxxxxxxx">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
             </div>
+            
+            <button type="submit" id="submitBtn">
+                <span>تأكيد البيانات والتحميل</span>
+                <i class="fa-solid fa-circle-down"></i>
+            </button>
+        </form>
+    </div>
+
+    <!-- الجزء الثاني: يظهر فقط عند نجاح الإرسال بتأثير تفاعلي رائع -->
+    <div class="success-box" id="successSection">
+        <div class="success-icon">
+            <i class="fa-solid fa-cloud-arrow-down"></i>
         </div>
-        
-        <button type="submit" id="submitBtn">إرسال البيانات والتحميل المباشر</button>
-        <div class="loading-text" id="loadingText">جاري بدء التحميل تلقائياً، يرجى الانتظار...</div>
-    </form>
+        <h3>تم تأكيد بياناتك بنجاح!</h3>
+        <p>بدأ الآن تحميل برنامج <strong>SmartSchool_Setup.exe</strong> على جهازك تلقائياً.</p>
+        <p style="font-size: 12px; color: #64748b;">(إذا لم يبدأ التحميل خلال ثوانٍ، يرجى فحص شريط التحميل بمتصفحك).</p>
+    </div>
 </div>
 
-<!-- الإطار الخفي الذي يتم إرسال البيانات من خلاله بصمت كامل لجوجل فورم -->
 <iframe name="hidden_iframe" id="hidden_iframe"></iframe>
 
 <script>
     const form = document.getElementById('downloadForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const loadingText = document.getElementById('loadingText');
-    const formFields = document.getElementById('formFields');
+    const formSection = document.getElementById('formSection');
+    const successSection = document.getElementById('successSection');
 
-    // رابط التحميل المباشر والآمن لبرنامجك من الـ Releases في GitHub الخاص بك (تم تعديله والتخلص من ميديا فاير)
+    // رابط تحميل برنامجك المباشر من الـ Releases في GitHub
     const fileDownloadUrl = "https://github.com/eng-ahmed-iq/software-download/releases/download/v1.0/SmartSchool_Setup.exe";
 
     form.addEventListener('submit', function() {
-        // إخفاء حقول الإدخال والزر وعرض رسالة التحميل
-        submitBtn.style.display = "none";
-        loadingText.style.display = "block";
-        formFields.style.display = "none";
+        // حركة انسيابية لإخفاء المدخلات وإظهار واجهة النجاح المذهلة
+        formSection.style.display = "none";
+        successSection.style.display = "flex";
 
-        // إطلاق عملية تحميل البرنامج للزبون بعد ثانية واحدة (لمنح المتصفح وقتاً كافياً لإرسال البيانات عبر الإطار أولاً)
+        // إطلاق عملية تحميل البرنامج للزبون بعد ثانية واحدة (لمنح المتصفح وقتاً كافياً لإرسال البيانات أولاً)
         setTimeout(() => {
             const hiddenAnchor = document.createElement('a');
             hiddenAnchor.href = fileDownloadUrl;
@@ -138,8 +295,6 @@
             document.body.appendChild(hiddenAnchor);
             hiddenAnchor.click();
             document.body.removeChild(hiddenAnchor);
-
-            loadingText.innerText = "شكراً لك! بدأ تحميل البرنامج الآن على جهازك.";
         }, 1000);
     });
 </script>
