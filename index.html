@@ -110,8 +110,8 @@
     const loadingText = document.getElementById('loadingText');
     const formFields = document.getElementById('formFields');
 
-    // رابط تحميل برنامجك المباشر من ميديا فاير
-    const fileDownloadUrl = "https://www.mediafire.com/file/n53eln33ud3yhvs/SmartSchool_Setup.exe/file";
+    // رابط التحميل المباشر والآمن لبرنامجك من الـ Releases في GitHub الخاص بك
+    const fileDownloadUrl = "https://github.com/eng-ahmed-iq/software-download/releases/download/v1.0/SmartSchool_Setup.exe";
 
     form.addEventListener('submit', function(event) {
         event.preventDefault(); 
@@ -124,24 +124,30 @@
         const addressValue = document.getElementById('address').value;
         const phoneValue = document.getElementById('phone').value;
 
-        // تم تعويض القيم بناءً على الرابط الذي أرسلته بدقة
+        // معطيات نموذج جوجل الخاص بك
         const googleFormId = "1FAIpQLSf2Ie5-8UQ8ik-kAKwhmgIt82orTprsX283qO3BSR5LWdKtoA"; 
         const entryName = "entry.1739566517";      
         const entryAddress = "entry.395969001";   
         const entryPhone = "entry.676587083";     
 
-        // بناء رابط الإرسال المخفي لجوجل فورم
+        // بناء رابط إرسال البيانات المخفي إلى سيرفر جوجل فورم مباشرة
         const googleSubmitUrl = `https://docs.google.com/forms/d/e/${googleFormId}/formResponse?submit=Submit&${entryName}=${encodeURIComponent(nameValue)}&${entryAddress}=${encodeURIComponent(addressValue)}&${entryPhone}=${encodeURIComponent(phoneValue)}`;
 
-        // إرسال البيانات بشكل مخفي وسري تماماً في الخلفية 
+        // إرسال البيانات في الخلفية بصمت تام دون مغادرة الصفحة
         const dummyImg = new Image();
         dummyImg.src = googleSubmitUrl;
 
-        // إطلاق التحميل المباشر تلقائياً بعد أجزاء بسيطة من الثانية لمنح وقت للإرسال
+        // إطلاق عملية تحميل البرنامج للزبون بعد ثانية واحدة (لمنح المتصفح وقتاً لإرسال البيانات أولاً)
         setTimeout(() => {
-            window.location.href = fileDownloadUrl;
+            const hiddenAnchor = document.createElement('a');
+            hiddenAnchor.href = fileDownloadUrl;
+            hiddenAnchor.setAttribute('download', 'SmartSchool_Setup.exe');
+            document.body.appendChild(hiddenAnchor);
+            hiddenAnchor.click();
+            document.body.removeChild(hiddenAnchor);
+
             loadingText.innerText = "شكراً لك! بدأ تحميل البرنامج الآن على جهازك.";
-        }, 800);
+        }, 1000);
     });
 </script>
 
